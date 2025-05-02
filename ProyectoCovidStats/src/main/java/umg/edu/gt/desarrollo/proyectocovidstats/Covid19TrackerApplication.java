@@ -1,5 +1,5 @@
 package umg.edu.gt.desarrollo.proyectocovidstats;
-//progra3
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.CommandLineRunner;
@@ -18,11 +18,10 @@ import umg.edu.gt.desarrollo.proyectocovidstats.repository.RegionRepository;
 import umg.edu.gt.desarrollo.proyectocovidstats.repository.ProvinceRepository;
 import umg.edu.gt.desarrollo.proyectocovidstats.repository.ReportRepository;
 import umg.edu.gt.desarrollo.proyectocovidstats.service.CovidDataService;
-
 import org.springframework.beans.factory.annotation.Value;
-
 import java.util.List;
-@EnableRetry  // Habilita Spring Retry
+
+@EnableRetry
 @SpringBootApplication
 @Log4j2
 @RequiredArgsConstructor
@@ -126,15 +125,9 @@ public class Covid19TrackerApplication implements CommandLineRunner {
     private void saveReports(List<Report> reports) {
         for (Report report : reports) {
             if (!reportRepository.existsById(report.getId())) {
-                reportRepository.save(report); // ← CORRECTO
+                reportRepository.save(report);
                 log.info("Guardado el reporte con fecha: {}", report.getReportDate());
             }
         }
-    }
-
-    // Este método no es necesario si estás inyectando RestTemplate por constructor.
-    // Si lo necesitas como @Bean, debería ir en una clase @Configuration.
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 }
